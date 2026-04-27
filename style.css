@@ -1,0 +1,137 @@
+body {
+  background: #fafafa;
+  font-family: "Courier New", monospace;
+  padding: 80px 24px 24px;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+nav.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+  padding: 12px 24px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  z-index: 10;
+}
+nav.topbar a {
+  font-family: inherit;
+  font-size: 13px;
+  letter-spacing: 1px;
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 8px 18px;
+  cursor: pointer;
+  color: #333;
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+nav.topbar a:hover { background: #f0f0f0; }
+nav.topbar a.active {
+  background: #214c89;
+  border-color: #214c89;
+  color: #fff;
+}
+
+h1 { text-align: center; margin: 0 0 8px; }
+h2 {
+  text-align: center;
+  color: #555;
+  margin: 24px 0 12px;
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+p.intro {
+  text-align: center;
+  color: #666;
+  font-size: 13px;
+  max-width: 560px;
+  margin: 0 auto 16px;
+  line-height: 1.6;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  width: max-content;
+  margin: 0 auto;
+  justify-items: center;
+  align-items: center;
+}
+.cell {
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 280px;
+  height: 280px;
+  box-sizing: border-box;
+}
+
+.logo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  width: max-content;
+  margin: 0 auto;
+}
+.logo-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 280px;
+  box-sizing: border-box;
+}
+.logo-card .sprite {
+  width: 100%;
+  height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.logo-card .label {
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  color: #222;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.logo-card .swatches {
+  display: flex;
+  gap: 4px;
+}
+.logo-card .swatches span {
+  width: 16px;
+  height: 16px;
+  border: 1px solid #ccc;
+  display: inline-block;
+}
+.logo-card .desc {
+  font-size: 11px;
+  color: #777;
+  text-align: center;
+  max-width: 240px;
+  line-height: 1.5;
+}
+
+canvas, svg {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  background: #fff;
+}
