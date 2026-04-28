@@ -120,7 +120,7 @@ function ensureDownloadModal() {
           <option value="0">None</option>
           <option value="2">Small (2px)</option>
           <option value="4" selected>Medium (4px)</option>
-          <option value="8">Large (8px)</option>
+          <option value="6">Large (6px)</option>
         </select>
       </label>
       <label class="checkbox">
