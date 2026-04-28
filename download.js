@@ -1,9 +1,13 @@
 // Download UI for sprites: hover-revealed button + modal with format/scale/bg options.
 // Depends on `renderCanvas` and `renderSVG` from pixels.js.
 
-function spriteToPNGBlob(map, scale, withBackground, padding) {
+// `offset` shifts the sprite vertically within the export frame without
+// changing the frame's overall size. Positive moves the sprite down,
+// negative moves it up.
+function spriteToPNGBlob(map, scale, withBackground, padding, offset) {
   const sprite = renderCanvas(map, scale);
   const pad = padding * scale;
+  const off = offset * scale;
   const out = document.createElement("canvas");
   out.width = sprite.width + pad * 2;
   out.height = sprite.height + pad * 2;
@@ -12,11 +16,11 @@ function spriteToPNGBlob(map, scale, withBackground, padding) {
     ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, out.width, out.height);
   }
-  ctx.drawImage(sprite, pad, pad);
+  ctx.drawImage(sprite, pad, pad + off);
   return new Promise((resolve) => out.toBlob(resolve, "image/png"));
 }
 
-function spriteToSVGBlob(map, scale, withBackground, padding) {
+function spriteToSVGBlob(map, scale, withBackground, padding, offset) {
   const SVG_NS = "http://www.w3.org/2000/svg";
   const w = map[0].length;
   const h = map.length;
@@ -47,7 +51,7 @@ function spriteToSVGBlob(map, scale, withBackground, padding) {
       if (!color) continue;
       const r = document.createElementNS(SVG_NS, "rect");
       r.setAttribute("x", x + padding);
-      r.setAttribute("y", y + padding);
+      r.setAttribute("y", y + padding + offset);
       r.setAttribute("width", 1);
       r.setAttribute("height", 1);
       r.setAttribute("fill", color);
@@ -69,12 +73,12 @@ function slugify(name) {
 async function downloadSprite(
   map,
   name,
-  { format, scale, withBackground, padding },
+  { format, scale, withBackground, padding, offset = 0 },
 ) {
   const blob =
     format === "svg"
-      ? spriteToSVGBlob(map, scale, withBackground, padding)
-      : await spriteToPNGBlob(map, scale, withBackground, padding);
+      ? spriteToSVGBlob(map, scale, withBackground, padding, offset)
+      : await spriteToPNGBlob(map, scale, withBackground, padding, offset);
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
@@ -123,6 +127,18 @@ function ensureDownloadModal() {
           <option value="6">Large (6px)</option>
         </select>
       </label>
+      <label>
+        <span>Vertical offset</span>
+        <select name="offset">
+          <option value="-3">−3px (up)</option>
+          <option value="-2">−2px (up)</option>
+          <option value="-1">−1px (up)</option>
+          <option value="0" selected>0</option>
+          <option value="1">+1px (down)</option>
+          <option value="2">+2px (down)</option>
+          <option value="3">+3px (down)</option>
+        </select>
+      </label>
       <label class="checkbox">
         <input type="checkbox" name="bg" />
         <span>White background</span>
@@ -142,6 +158,7 @@ function ensureDownloadModal() {
       format: fd.get("format"),
       scale: parseInt(fd.get("scale"), 10),
       padding: parseInt(fd.get("padding"), 10),
+      offset: parseInt(fd.get("offset"), 10),
       withBackground: fd.get("bg") === "on",
     });
   });

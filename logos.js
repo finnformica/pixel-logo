@@ -98,33 +98,48 @@ const propGrid = document.getElementById("propGrid");
 props.forEach((p) => propGrid.appendChild(buildCard(p)));
 
 const presetSets = [
-  { base: "finnformica-logo", map: blueDragon },
-  { base: "formic-software", map: propHoodie },
+  { base: "finnformica", map: blueDragon, offset: -1 },
+  { base: "formic-software", map: propHoodie, offset: -1 },
 ];
-const presets = presetSets.flatMap(({ base, map }) => [
-  { name: `${base}-no-bg`, map, format: "svg", withBackground: false },
-  { name: `${base}-white-bg`, map, format: "svg", withBackground: true },
-  { name: `${base}-no-bg`, map, format: "png", withBackground: false },
-  { name: `${base}-white-bg`, map, format: "png", withBackground: true },
+const presets = presetSets.flatMap(({ base, map, offset }) => [
+  { name: `${base}-no-bg`, map, offset, format: "svg", withBackground: false },
+  {
+    name: `${base}-white-bg`,
+    map,
+    offset,
+    format: "svg",
+    withBackground: true,
+  },
+  { name: `${base}-no-bg`, map, offset, format: "png", withBackground: false },
+  {
+    name: `${base}-white-bg`,
+    map,
+    offset,
+    format: "png",
+    withBackground: true,
+  },
 ]);
 
-document.getElementById("downloadPresets").addEventListener("click", async () => {
-  const zip = new JSZip();
-  const folder = zip.folder("logos");
-  for (const p of presets) {
-    const blob =
-      p.format === "svg"
-        ? spriteToSVGBlob(p.map, 64, p.withBackground, 6)
-        : await spriteToPNGBlob(p.map, 64, p.withBackground, 6);
-    folder.file(`${p.name}.${p.format}`, blob);
-  }
-  const out = await zip.generateAsync({ type: "blob" });
-  const url = URL.createObjectURL(out);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "logos.zip";
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  URL.revokeObjectURL(url);
-});
+document
+  .getElementById("downloadPresets")
+  .addEventListener("click", async () => {
+    const Zip = /** @type {any} */ (globalThis).JSZip;
+    const zip = new Zip();
+    const folder = zip.folder("logos");
+    for (const p of presets) {
+      const blob =
+        p.format === "svg"
+          ? spriteToSVGBlob(p.map, 64, p.withBackground, 6, p.offset)
+          : await spriteToPNGBlob(p.map, 64, p.withBackground, 6, p.offset);
+      folder.file(`${p.name}.${p.format}`, blob);
+    }
+    const out = await zip.generateAsync({ type: "blob" });
+    const url = URL.createObjectURL(out);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "logos.zip";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  });
