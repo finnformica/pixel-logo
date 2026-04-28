@@ -69,6 +69,7 @@ p.intro {
   align-items: center;
 }
 .cell {
+  position: relative;
   background: #fff;
   border: 1px solid #ddd;
   padding: 10px;
@@ -88,6 +89,7 @@ p.intro {
   margin: 0 auto;
 }
 .logo-card {
+  position: relative;
   background: #fff;
   border: 1px solid #ddd;
   padding: 16px;
@@ -134,4 +136,112 @@ canvas, svg {
   image-rendering: pixelated;
   image-rendering: crisp-edges;
   background: #fff;
+}
+
+.download-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border: 1px solid #ccc;
+  color: #333;
+  cursor: pointer;
+  padding: 0;
+  opacity: 0;
+  transition: opacity 0.15s, background 0.15s, border-color 0.15s;
+}
+.cell:hover .download-btn,
+.logo-card:hover .download-btn,
+.download-btn:focus-visible {
+  opacity: 1;
+}
+.download-btn:hover {
+  background: #f0f0f0;
+  border-color: #999;
+}
+
+dialog.download-modal {
+  border: 1px solid #ccc;
+  background: #fff;
+  padding: 24px;
+  font-family: inherit;
+  min-width: 300px;
+  color: #222;
+}
+dialog.download-modal::backdrop {
+  background: rgba(0, 0, 0, 0.4);
+}
+dialog.download-modal h3 {
+  margin: 0 0 16px;
+  font-size: 13px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+dialog.download-modal h3 .dl-name {
+  color: #214c89;
+}
+dialog.download-modal form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+dialog.download-modal label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #666;
+}
+dialog.download-modal label.checkbox {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 13px;
+  color: #333;
+}
+dialog.download-modal select {
+  font-family: inherit;
+  font-size: 13px;
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  background: #fff;
+  color: #222;
+}
+dialog.download-modal .actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+}
+dialog.download-modal button {
+  font-family: inherit;
+  font-size: 12px;
+  letter-spacing: 1px;
+  padding: 8px 16px;
+  background: #fff;
+  border: 1px solid #ccc;
+  color: #333;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+dialog.download-modal button:hover {
+  background: #f0f0f0;
+}
+dialog.download-modal button.primary {
+  background: #214c89;
+  border-color: #214c89;
+  color: #fff;
+}
+dialog.download-modal button.primary:hover {
+  background: #1a3d6f;
+  border-color: #1a3d6f;
 }

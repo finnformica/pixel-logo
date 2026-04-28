@@ -30,6 +30,7 @@
     <div class="logo-grid" id="propGrid"></div>
 
     <script src="pixels.js"></script>
+    <script src="download.js"></script>
     <script>
       // Each variant remaps the blue-dragon sprite chars (t = light, C = dark)
       // into a new palette pair already defined in pixels.js.
@@ -93,6 +94,8 @@
       function buildCard({ name, desc, map, swatches }) {
         const card = document.createElement("div");
         card.className = "logo-card";
+
+        attachDownloadButton(card, map, name);
 
         const sprite = document.createElement("div");
         sprite.className = "sprite";
