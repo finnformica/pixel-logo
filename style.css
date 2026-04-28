@@ -1,5 +1,6 @@
 body {
-  background: #fafafa;
+  background: #1e1e1e;
+  color: #e6e6e6;
   font-family: "Courier New", monospace;
   padding: 80px 24px 24px;
   margin: 0;
@@ -15,8 +16,8 @@ nav.topbar {
   top: 0;
   left: 0;
   right: 0;
-  background: #fff;
-  border-bottom: 1px solid #ddd;
+  background: #252526;
+  border-bottom: 1px solid #2a2a2e;
   padding: 12px 24px;
   display: flex;
   justify-content: center;
@@ -27,32 +28,43 @@ nav.topbar a {
   font-family: inherit;
   font-size: 13px;
   letter-spacing: 1px;
-  background: #fff;
-  border: 1px solid #ccc;
+  background: #252526;
+  border: 1px solid #2f2f33;
   padding: 8px 18px;
   cursor: pointer;
-  color: #333;
+  color: #d0d0d0;
   text-decoration: none;
-  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  transition:
+    background 0.15s,
+    border-color 0.15s,
+    color 0.15s;
 }
-nav.topbar a:hover { background: #f0f0f0; }
+nav.topbar a:hover {
+  background: #222226;
+  border-color: #444;
+  color: #fff;
+}
 nav.topbar a.active {
   background: #214c89;
   border-color: #214c89;
   color: #fff;
 }
 
-h1 { text-align: center; margin: 0 0 8px; }
+h1 {
+  text-align: center;
+  margin: 0 0 8px;
+  color: #f0f0f0;
+}
 h2 {
   text-align: center;
-  color: #555;
+  color: #888;
   margin: 24px 0 12px;
   font-size: 14px;
   letter-spacing: 2px;
 }
 p.intro {
   text-align: center;
-  color: #666;
+  color: #9a9a9a;
   font-size: 13px;
   max-width: 560px;
   margin: 0 auto 16px;
@@ -132,7 +144,8 @@ p.intro {
   line-height: 1.5;
 }
 
-canvas, svg {
+canvas,
+svg {
   image-rendering: pixelated;
   image-rendering: crisp-edges;
   background: #fff;
@@ -151,7 +164,9 @@ nav.topbar .nav-download {
   color: #fff;
   padding: 8px 18px;
   cursor: pointer;
-  transition: background 0.15s, border-color 0.15s;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
 }
 nav.topbar .nav-download:hover {
   background: #1a3d6f;
@@ -173,7 +188,10 @@ nav.topbar .nav-download:hover {
   cursor: pointer;
   padding: 0;
   opacity: 0;
-  transition: opacity 0.15s, background 0.15s, border-color 0.15s;
+  transition:
+    opacity 0.15s,
+    background 0.15s,
+    border-color 0.15s;
 }
 .cell:hover .download-btn,
 .logo-card:hover .download-btn,
@@ -186,24 +204,25 @@ nav.topbar .nav-download:hover {
 }
 
 dialog.download-modal {
-  border: 1px solid #ccc;
-  background: #fff;
+  border: 1px solid #2f2f33;
+  background: #252526;
   padding: 24px;
   font-family: inherit;
   min-width: 300px;
-  color: #222;
+  color: #e6e6e6;
 }
 dialog.download-modal::backdrop {
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.6);
 }
 dialog.download-modal h3 {
   margin: 0 0 16px;
   font-size: 13px;
   letter-spacing: 1.5px;
   text-transform: uppercase;
+  color: #f0f0f0;
 }
 dialog.download-modal h3 .dl-name {
-  color: #214c89;
+  color: #6ea3ff;
 }
 dialog.download-modal form {
   display: flex;
@@ -217,7 +236,7 @@ dialog.download-modal label {
   font-size: 11px;
   letter-spacing: 1px;
   text-transform: uppercase;
-  color: #666;
+  color: #9a9a9a;
 }
 dialog.download-modal label.checkbox {
   flex-direction: row;
@@ -226,15 +245,15 @@ dialog.download-modal label.checkbox {
   text-transform: none;
   letter-spacing: 0;
   font-size: 13px;
-  color: #333;
+  color: #d0d0d0;
 }
 dialog.download-modal select {
   font-family: inherit;
   font-size: 13px;
   padding: 6px 8px;
-  border: 1px solid #ccc;
-  background: #fff;
-  color: #222;
+  border: 1px solid #2f2f33;
+  background: #1e1e1e;
+  color: #e6e6e6;
 }
 dialog.download-modal .actions {
   display: flex;
@@ -247,14 +266,17 @@ dialog.download-modal button {
   font-size: 12px;
   letter-spacing: 1px;
   padding: 8px 16px;
-  background: #fff;
-  border: 1px solid #ccc;
-  color: #333;
+  background: #1e1e1e;
+  border: 1px solid #2f2f33;
+  color: #d0d0d0;
   cursor: pointer;
-  transition: background 0.15s, border-color 0.15s;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
 }
 dialog.download-modal button:hover {
-  background: #f0f0f0;
+  background: #222226;
+  border-color: #444;
 }
 dialog.download-modal button.primary {
   background: #214c89;
@@ -262,6 +284,6 @@ dialog.download-modal button.primary {
   color: #fff;
 }
 dialog.download-modal button.primary:hover {
-  background: #1a3d6f;
-  border-color: #1a3d6f;
+  background: #2a5fad;
+  border-color: #2a5fad;
 }
