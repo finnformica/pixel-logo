@@ -19,7 +19,15 @@
       so they read as siblings, not strangers.
     </p>
 
+    <h2>— COLOUR DIRECTIONS —</h2>
     <div class="logo-grid" id="logoGrid"></div>
+
+    <h2>— PROP VARIATIONS —</h2>
+    <p class="intro">
+      Same blue palette, different accessory. Tests how a small prop changes
+      the personality without touching the silhouette.
+    </p>
+    <div class="logo-grid" id="propGrid"></div>
 
     <script src="pixels.js"></script>
     <script>
@@ -64,15 +72,31 @@
         },
       ];
 
-      const logoGrid = document.getElementById("logoGrid");
+      const props = [
+        {
+          name: "Wizard",
+          desc: "Pointy hat sitting low on the head, swept back. Magical, playful, creative-coding energy.",
+          map: propWizard,
+        },
+        {
+          name: "Sunglasses",
+          desc: "Chunky black shades. Cool, confident, design-led — reads at any size.",
+          map: propGlasses,
+        },
+        {
+          name: "Hoodie",
+          desc: "Full dark-grey hoodie, ghost-inspired drape. Heads-down builder, code-ninja vibe.",
+          map: propHoodie,
+        },
+      ];
 
-      variants.forEach(({ name, desc, map, swatches }) => {
+      function buildCard({ name, desc, map, swatches }) {
         const card = document.createElement("div");
         card.className = "logo-card";
 
         const sprite = document.createElement("div");
         sprite.className = "sprite";
-        sprite.appendChild(renderSVG(map, 12));
+        sprite.appendChild(renderSVG(map, 10));
         card.appendChild(sprite);
 
         const label = document.createElement("div");
@@ -80,22 +104,29 @@
         label.textContent = name;
         card.appendChild(label);
 
-        const sw = document.createElement("div");
-        sw.className = "swatches";
-        swatches.forEach(key => {
-          const s = document.createElement("span");
-          s.style.background = palette[key];
-          sw.appendChild(s);
-        });
-        card.appendChild(sw);
+        if (swatches) {
+          const sw = document.createElement("div");
+          sw.className = "swatches";
+          swatches.forEach(key => {
+            const s = document.createElement("span");
+            s.style.background = palette[key];
+            sw.appendChild(s);
+          });
+          card.appendChild(sw);
+        }
 
         const d = document.createElement("div");
         d.className = "desc";
         d.textContent = desc;
         card.appendChild(d);
+        return card;
+      }
 
-        logoGrid.appendChild(card);
-      });
+      const logoGrid = document.getElementById("logoGrid");
+      variants.forEach(v => logoGrid.appendChild(buildCard(v)));
+
+      const propGrid = document.getElementById("propGrid");
+      props.forEach(p => propGrid.appendChild(buildCard(p)));
     </script>
   </body>
 </html>
