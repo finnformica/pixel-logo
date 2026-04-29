@@ -24,7 +24,7 @@ function buildNavbar() {
   btn.id = "downloadPresets";
   btn.className = "nav-download";
   btn.type = "button";
-  btn.title = "Download logo presets (zip of 8 files at 64× / large padding)";
+  btn.title = "Download logo presets (zip of 8 files at 64x / large padding)";
   btn.textContent = "DOWNLOAD PRESETS";
   nav.appendChild(btn);
 
@@ -38,9 +38,21 @@ const _presetSets = [
 ];
 const _presets = _presetSets.flatMap(({ base, map, offset }) => [
   { name: `${base}-no-bg`, map, offset, format: "svg", withBackground: false },
-  { name: `${base}-white-bg`, map, offset, format: "svg", withBackground: true },
+  {
+    name: `${base}-white-bg`,
+    map,
+    offset,
+    format: "svg",
+    withBackground: true,
+  },
   { name: `${base}-no-bg`, map, offset, format: "png", withBackground: false },
-  { name: `${base}-white-bg`, map, offset, format: "png", withBackground: true },
+  {
+    name: `${base}-white-bg`,
+    map,
+    offset,
+    format: "png",
+    withBackground: true,
+  },
 ]);
 
 buildNavbar().addEventListener("click", async () => {
