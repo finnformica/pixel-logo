@@ -6,11 +6,13 @@ function buildNavbar() {
   const nav = document.createElement("nav");
   nav.className = "topbar";
 
-  const isLogos = location.pathname.endsWith("logos.html");
+  const isLogos    = location.pathname.endsWith("logos.html");
+  const isHeadshot = location.pathname.endsWith("headshot.html");
 
   const links = [
-    { href: "index.html", label: "CHARACTERS", active: !isLogos },
-    { href: "logos.html", label: "LOGO IDEAS", active: isLogos },
+    { href: "index.html",    label: "CHARACTERS", active: !isLogos && !isHeadshot },
+    { href: "logos.html",    label: "LOGO IDEAS",  active: isLogos },
+    { href: "headshot.html", label: "HEADSHOTS",   active: isHeadshot },
   ];
   for (const { href, label, active } of links) {
     const a = document.createElement("a");
