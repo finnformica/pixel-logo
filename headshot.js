@@ -1,4 +1,4 @@
-const SCALE = 12; // 12px per pixel → 384×384 canvas display
+const SCALE = 14; // 14px per pixel → 336×420 canvas display (24×30 art grid)
 const grid  = document.getElementById("hsGrid");
 
 let bgColour = document.getElementById("bgColour").value; // current bg (null = transparent)
