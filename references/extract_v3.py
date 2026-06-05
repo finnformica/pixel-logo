@@ -32,12 +32,14 @@ PREVIEW = Path("/tmp/headshot_preview")
 
 # (img_no, left, top, right, bottom, art_cols, art_rows, display_name, js_var_suffix)
 SPECS = [
-    (3,  37,   35, 1142, 1487, 24, 32, "Plain",      "Plain"),
-    (1,   0,   43, 1091, 1546, 24, 33, "Bubblegum",  "Bubblegum"),
-    (2,  45,   40,  990, 1304, 24, 32, "Black Cat",  "Cat"),
-    (4, 120,  110,  910, 1097, 24, 30, "Sunglasses", "Sunglasses"),
-    (5,  24,   40,  928, 1210, 24, 32, "T-Rex",      "Trex"),
-    (6,  39,   23, 1115, 1397, 24, 29, "Penguin",    "Penguin"),
+    # (img_no, l, t, r, b, art_w, art_h, display_name, js_var_suffix)
+    # art_h > TARGET_H → first TARGET_H rows kept (top accessories preserved, bottom trimmed).
+    (3,  37,   35, 1132, 1550, 24, 34, "Plain",      "Plain"),      # r=1132 (white space starts at ~1135)
+    (1,   0,   43, 1093, 1549, 24, 33, "Bubblegum",  "Bubblegum"),  # full content bounds
+    (2,  40,   10, 1000, 1304, 24, 33, "Black Cat",  "Cat"),         # t=10 to include cat ears
+    (4, 140,  110, 1040, 1257, 24, 33, "Sunglasses", "Sunglasses"), # true portrait bounds within 3-up collage
+    (5,  24,   21,  928, 1210, 24, 32, "T-Rex",      "Trex"),        # exact content bounds from scan
+    (6,  39,   23, 1122, 1408, 24, 33, "Penguin",    "Penguin"),    # r=1122 (white space starts at ~1130)
 ]
 
 SAMPLE_STEP   = 3    # sparse-sample every Nth pixel within each cell region
@@ -128,21 +130,25 @@ def border_median(grid):
 
 def flood_fill_bg(grid, bg_raw, thresh):
     """
-    BFS flood fill from border cells outward.  A neighbour is background if
-    its colour distance from bg_raw < thresh.  Returns 2-D bool mask.
+    BFS flood fill from border cells outward.  Only border cells whose colour
+    is within thresh of bg_raw are seeded — this prevents earrings or other
+    non-bg coloured edge cells from being wrongly classified as background.
+    A neighbour is background if its colour distance from bg_raw < thresh.
+    Returns 2-D bool mask.
     """
     rows, cols = len(grid), len(grid[0])
     is_bg = [[False] * cols for _ in range(rows)]
     q = deque()
 
+    border = set()
     for c in range(cols):
-        for r in (0, rows - 1):
-            if not is_bg[r][c]:
-                is_bg[r][c] = True; q.append((r, c))
+        border.add((0, c)); border.add((rows - 1, c))
     for r in range(rows):
-        for c in (0, cols - 1):
-            if not is_bg[r][c]:
-                is_bg[r][c] = True; q.append((r, c))
+        border.add((r, 0)); border.add((r, cols - 1))
+
+    for (r, c) in border:
+        if rgb_dist(grid[r][c], bg_raw) < thresh and not is_bg[r][c]:
+            is_bg[r][c] = True; q.append((r, c))
 
     while q:
         r, c = q.popleft()
@@ -282,9 +288,8 @@ def main():
             pad_bot   = TARGET_H - art_h - pad_top
             row_range = range(art_h)
         else:
-            drop      = art_h - TARGET_H
-            skip      = drop // 2
-            row_range = range(skip, skip + TARGET_H)
+            # Trim from the bottom to preserve accessories at the top.
+            row_range = range(TARGET_H)
             pad_top = pad_bot = 0
 
         pad_l   = (TARGET_W - art_w) // 2
