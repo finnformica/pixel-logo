@@ -5,12 +5,13 @@ let bgColour = document.getElementById("bgColour").value; // current bg (null = 
 let useBg    = true;
 
 // Render a headshot canvas with optional solid background colour.
-function renderHeadshot(map, bg) {
+// `scale` defaults to the display scale; pass a larger value for high-res exports.
+function renderHeadshot(map, bg, scale = SCALE) {
   const w = map[0].length;
   const h = map.length;
   const cv = document.createElement("canvas");
-  cv.width  = w * SCALE;
-  cv.height = h * SCALE;
+  cv.width  = w * scale;
+  cv.height = h * scale;
   const ctx = cv.getContext("2d");
   if (bg) {
     ctx.fillStyle = bg;
@@ -22,7 +23,7 @@ function renderHeadshot(map, bg) {
       const color = palette[ch];
       if (!color) continue;
       ctx.fillStyle = color;
-      ctx.fillRect(x * SCALE, y * SCALE, SCALE, SCALE);
+      ctx.fillRect(x * scale, y * scale, scale, scale);
     }
   }
   return cv;
@@ -65,7 +66,7 @@ headshots.forEach(({ name, map }) => {
   btn.addEventListener("click", async () => {
     const bg   = useBg ? bgColour : null;
     const blob = await new Promise((resolve) => {
-      const c = renderHeadshot(map, bg);
+      const c = renderHeadshot(map, bg, 64);
       c.toBlob(resolve, "image/png");
     });
     const url = URL.createObjectURL(blob);
